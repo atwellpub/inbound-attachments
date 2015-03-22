@@ -85,6 +85,9 @@ if ( !class_exists( 'Inbound_Attachments' )) {
 				
 			}
 			
+			/* Enqueue assets for front end and backend field rendering */
+			include_once INBOUND_ATTACHMENTS_PATH . 'classes/class.enqueue.php';
+			
 			/* extend inbound form fields */
 			include_once INBOUND_ATTACHMENTS_PATH . 'classes/class.inbound-fields.php';
 			
