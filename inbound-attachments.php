@@ -78,7 +78,7 @@ if ( !class_exists( 'Inbound_Attachments' )) {
 			if ( is_admin() ) {		
 				
 				/* extend lead profile */
-				include_once INBOUND_ATTACHMENTS_PATH . 'classes/class.lead-profile.php';
+				include_once INBOUND_ATTACHMENTS_PATH . 'classes/class.lead-profiles.php';
 				
 				/* adds settings to global settings */
 				include_once INBOUND_ATTACHMENTS_PATH . 'classes/class.settings.php';
