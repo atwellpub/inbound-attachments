@@ -1,10 +1,11 @@
 <?php
 /*
-Plugin Name: Inbound Attachments
+Plugin Name: Inbound Extension - Attachments
 Plugin URI: http://www.inboundnow.com/
 Description: Extends Inbound Forms with an attachments field type.
 Version: 1.0.1
 Author: Inbound Now
+Contributors: Ajay Shukla, Hudson Atwell
 Author URI: http://www.inboundnow.com/
 *
 */
@@ -51,7 +52,7 @@ if ( !class_exists( 'Inbound_Attachments' )) {
 			define('INBOUND_ATTACHMENTS_FILE' ,	__FILE__ ); 
 			define('INBOUND_ATTACHMENTS_REMOTE_ITEM_NAME' , 'inbound-attaxchments' ); 
 			define('INBOUND_ATTACHMENTS_URLPATH', plugins_url( '/', __FILE__ ) ); 
-			define('INBOUND_ATTACHMENTS_PATH', WP_PLUGIN_DIR.'/'.plugin_basename( dirname(__FILE__) ).'/' ); 
+			define('INBOUND_ATTACHMENTS_PATH', realpath(dirname(__FILE__) ).'/');
 		}
 		
 		/**
@@ -61,7 +62,7 @@ if ( !class_exists( 'Inbound_Attachments' )) {
 			
 			/* ignore these hooks if inbound pro is active */
 			if (defined('INBOUND_PRO_CURRENT_VERSION')) {
-				return $global_settings;
+				return;
 			}
 	
 			/*PREPARE THIS EXTENSION FOR LICESNING*/
@@ -76,14 +77,14 @@ if ( !class_exists( 'Inbound_Attachments' )) {
 		public static function load_files() {
 			
 			if ( is_admin() ) {		
-				
+			
 				/* extend lead profile */
 				include_once INBOUND_ATTACHMENTS_PATH . 'classes/class.lead-profiles.php';
 				
-				/* adds settings to global settings */
-				include_once INBOUND_ATTACHMENTS_PATH . 'classes/class.settings.php';
-				
 			}
+			
+			/* adds settings to global settings */
+			include_once INBOUND_ATTACHMENTS_PATH . 'classes/class.settings.php';
 			
 			/* Enqueue assets for front end and backend field rendering */
 			include_once INBOUND_ATTACHMENTS_PATH . 'classes/class.enqueue.php';
@@ -94,6 +95,9 @@ if ( !class_exists( 'Inbound_Attachments' )) {
 			/* processes form submissions */
 			include_once INBOUND_ATTACHMENTS_PATH . 'classes/class.processing.php';
 				
+				
+			/* processes file upload ajax request*/
+			include_once INBOUND_ATTACHMENTS_PATH . 'assets/libraries/server/php/index.php';
 		}
 		
 	}
