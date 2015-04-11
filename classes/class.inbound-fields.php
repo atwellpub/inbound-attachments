@@ -23,7 +23,7 @@ if ( !class_exists( 'Inbound_Attachments_Fields' )) {
 			add_filter( 'inboundnow_forms_settings' , array( __CLASS__ , 'extend_field_type_dropdown' ) );
 			
 			/* Add handler to process field type */
-			add_filter( 'inbound_form_custom_field', array( __CLASS__ , 'inbound_form_custom_field' ), 10, 3 );
+			add_filter( 'inbound_form_custom_field' , array( __CLASS__ , 'inbound_form_custom_field' ), 10, 3 );
 		}
 		
 		/**
@@ -39,11 +39,15 @@ if ( !class_exists( 'Inbound_Attachments_Fields' )) {
 		*  Listens for attachment uploader field type and renders it 
 		*/
 		public static function inbound_form_custom_field( $form, $field, $form_id) {
+			global $attachments_loaded;
 			
 			/* only render field if 'attachments' type is selected. */ 
 			if ( !$field || $field['type'] != 'attachments'){
 				return;
 			}
+
+			/* Mark loaded */
+			$attachments_loaded = true;
 			
 			/* get attachment settings */
 			$settings = Inbound_Attachments_Settings::get_settings();

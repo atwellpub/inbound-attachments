@@ -21,7 +21,7 @@ if ( !class_exists( 'Inbound_Attachments_Enqueue' )) {
 		public static function load_hooks() {
 			
 			/* Add new field type to dropdown */
-			add_filter( 'wp_enqueue_scripts' , array( __CLASS__ , 'enqueue_files' ), 1 );
+			add_filter( 'wp_footer' , array( __CLASS__ , 'enqueue_files' ), 1 );
 			
 			/* Add handler to process field type */
 			add_action( 'admin_enqueue_scripts' , array( __CLASS__ , 'enqueue_files') );
@@ -31,6 +31,12 @@ if ( !class_exists( 'Inbound_Attachments_Enqueue' )) {
 		*  Enqueue JS & CSS files for front end and backend
 		*/
 		public static function enqueue_files( $config ) {
+			global $attachments_loaded;
+			
+			if (!isset($attachments_loaded)) {
+				return;
+			}
+			
 			$inbound_attachment_file_upload = 'var inbound_attachment_file_upload = "'. admin_url( 'admin-ajax.php' ).'/?action=inbound_attachment_file_upload";';
 			$ajax_url = 'var ajaxurl = "'. admin_url( 'admin-ajax.php' ).'";';
 			echo "<script type='text/javascript'>\n";
@@ -40,7 +46,8 @@ if ( !class_exists( 'Inbound_Attachments_Enqueue' )) {
 			echo "\n/* ]]> */\n";
 			echo "</script>\n";
 			
-			wp_enqueue_style( 'inbound-attachment-bootstrap-min', '//netdna.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css' );
+			//wp_enqueue_style( 'inbound-attachment-bootstrap-min', '//netdna.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css' );
+			wp_enqueue_style( 'inbound-attachment-bootstrap-min', INBOUND_ATTACHMENTS_URLPATH.'assets/libraries/bootstrap/css/bootstrap.css' );
 			wp_enqueue_style( 'inbound-attachment-style', INBOUND_ATTACHMENTS_URLPATH.'assets/css/style.css' );
 			wp_enqueue_style( 'inbound-attachment-blueimp-gallery', '//blueimp.github.io/Gallery/css/blueimp-gallery.min.css' );
 			wp_enqueue_style( 'inbound-attachment-jquery-fileupload', INBOUND_ATTACHMENTS_URLPATH.'assets/css/jquery.fileupload.css' );

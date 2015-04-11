@@ -19,16 +19,11 @@ body {
 #wpleads_lead_tab_attachments .lead-timeline img {  float: left; margin-right: 25px;}
 
 
-
-
-
-
-
-
-
-
-
-
+/*table */
+.files td {
+	font-size:15px;
+	vertical-align:middle;
+}
 
 
 
