@@ -79,7 +79,7 @@ if ( !class_exists( 'Inbound_Attachments_Fields' )) {
 								<span class="btn btn-success fileinput-button">
 									<i class="glyphicon glyphicon-plus"></i>
 									<span>'. __( 'Add files...' , 'inbound-pro' ) .'</span>
-									<input type="'.$input_type .'" class="inbound-input '.$formatted_label . ' ' .$field_input_class.'" name="'.$field_name.'[]" id="'.$field_name.'" value="'.$fill_value.'" '.$data_mapping_attr.$et_output.' '.$req.' multiple/>
+									<input type="'.$input_type .'" class="inbound-input '.$formatted_label . ' ' .$field_input_class.'" name="'.$field_name.'[]" id="'.$field_name.'" value="'.$fill_value.'" '.$et_output.' '.$req.' multiple/>
 									<input type="hidden" name="inbound_attachment_files"  id="inbound_attachment_files" value="" />
 								</span>
 								<!--
@@ -167,12 +167,8 @@ if ( !class_exists( 'Inbound_Attachments_Fields' )) {
 								</span>
 							</td>ssss
 							<td>
-								<p class="name">
-									{% if (file.url) { %}
-										<a href="{%=file.url%}" title="{%=file.name%}" download="{%=file.name%}" {%=file.thumbnailUrl?"data-gallery":""%}>{%=file.name%}</a>
-									{% } else { %}
-										<span>{%=file.name%}</span>
-									{% } %}
+								<p class="name">									
+									<span>{%=file.name%}</span>
 								</p>
 								{% if (file.error) { %}
 									<div><span class="label label-danger">'.__( 'Error' , 'inbound-pro' ) .'</span> {%=file.error%}</div>

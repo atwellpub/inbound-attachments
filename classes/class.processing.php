@@ -92,11 +92,11 @@ if ( !class_exists( 'Inbound_Attachments_Processing' )) {
 		*/
 		public static function inbound_attachment_email_attachment_notification( $attachments ){
 			
-			if (!class_exists('Inbound_API') || !isset($_POST['email']) || !isset( $_POST['inbound_attachment_files'] ) ) {
+			if (!class_exists('Inbound_API') || !isset($_POST['wpleads_email_address']) || !isset( $_POST['inbound_attachment_files'] ) ) {
 				return $attachments;
 			}
 			
-			$lead_id = Inbound_API::leads_get_id_from_email($_POST['email']);			
+			$lead_id = Inbound_API::leads_get_id_from_email($_POST['wpleads_email_address']);			
 			$lead_dir = self::get_attachments_directory( $lead_id );
 			
 			$uploaded_files = explode('|', $_POST['inbound_attachment_files']);

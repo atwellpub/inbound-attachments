@@ -1255,6 +1255,7 @@ class UploadHandler
 			if($this->options['param_name'] != 'attachments'){
 				$json = str_replace($this->options['param_name'],'files', $json);
 			} else {
+				error_log($this->options['param_name']);
 				$json = str_replace($this->options['param_name'],'files', $json);
 				$json = str_replace( '/files', '/attachments', $json);
 			}

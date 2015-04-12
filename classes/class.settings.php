@@ -124,8 +124,8 @@ if ( !class_exists( 'Inbound_Attachments_Settings' )) {
 			$attachment_settings = array();
 			
 			if (!defined('INBOUND_PRO_CURRENT_VERSION')) {
-				$settings['filetypes_allowed'] = get_option('inboundnow_attachment_filetypes_allowed' , 'gif,jpeg,png,jpg,pdf,zip');				
-				$settings['max_size_limit'] = get_option('inboundnow_attachment_max_size_limit' , '10000000');				
+				$attachment_settings['filetypes_allowed'] = get_option('inboundnow_attachment_filetypes_allowed' , 'gif,jpeg,png,jpg,pdf,zip');				
+				$attachment_settings['max_size_limit'] = get_option('inboundnow_attachment_max_size_limit' , '10000000');				
 			} else {
 			
 				$settings = Inbound_Options_API::get_option( 'inbound-pro' , 'settings' , array() );

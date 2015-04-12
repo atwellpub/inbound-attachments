@@ -60,17 +60,15 @@ if ( !class_exists( 'Inbound_Attachments_Lead_Profile' )) {
 			$upload_dir = $wp_upload_dir_path.'/leads/attachments/'.$lead_id.'/';
 			$upload_url = $wp_upload_dir['baseurl'].'/leads/attachments/'.$lead_id.'/';
 			$upload_url_thumbs = $wp_upload_dir['baseurl'].'/leads/attachments/'.$lead_id.'/thumbnail/';
-			$wpleads_attachments = maybe_unserialize($wpleads_attachments);
+
 			
 			?>
 			<div class="lead-profile-section" id="wpleads_lead_tab_attachments" >
 				<div id="activity-data-display">
 					<div id="all-lead-history">				
 					<?php  
-					
-					$wpleads_attachments = $files1 = scandir($upload_dir);
-					if(!empty($wpleads_attachments)){
-						
+					$wpleads_attachments =  (file_exists($upload_dir)) ? scandir($upload_dir) : false ;
+					if($wpleads_attachments){						
 						
 						foreach($wpleads_attachments as $filename){
 							if ( $filename == '.' || $filename == '..' || $filename == 'index.php'|| $filename == 'thumbnail' ) {
@@ -88,10 +86,14 @@ if ( !class_exists( 'Inbound_Attachments_Lead_Profile' )) {
 							if( preg_match( '/^image/', $filetype['type'] ) && file_exists($upload_dir.'thumbnail/'.$filename) ){
 								?>
 								<div class="lead-timeline recent-conversion-item page-view-item page cloned-item"> 
-									<img src="<?php echo $file_url; ?>" />
+									<img src="<?php echo $file_url; ?>" class="lead-timeline-img" download style='max-width:50px;margin-top:10px;'/>
 									<div class="lead-timeline-body">
 										<div class="lead-event-text">
-											<a href="<?php echo $download_link; ?>" title="<?php _e( 'Click to download attachment' , 'inbound-pro' ); ?>" download><p><span class="lead-item-num" style="display: none;"></span><span class="lead-helper-text"><?php echo $file; ?></span></p></a>
+											<p>
+											<span class="lead-helper-text">
+												<a href="<?php echo $download_link; ?>" title="<?php _e( 'Click to download attachment' , 'inbound-pro' ); ?>" download><p><span class="lead-item-num" style="display: none;"></span><span class="lead-helper-text"><?php echo $filename; ?></span></p></a>
+											</span>
+											</p>
 										</div>
 									</div>
 								</div>
@@ -105,7 +107,7 @@ if ( !class_exists( 'Inbound_Attachments_Lead_Profile' )) {
 										<div class="lead-event-text">
 											<p>
 												<span class="lead-helper-text">
-													<a href="<?php echo $download_link; ?>" title="<?php _e( 'Click to download attachment' , 'inbound-pro' ); ?>" download><?php echo $file; ?></a>
+													<a href="<?php echo $download_link; ?>" title="<?php _e( 'Click to download attachment' , 'inbound-pro' ); ?>" download><?php echo $filename; ?></a>
 												</span>
 											</p>
 										</div>
@@ -117,7 +119,7 @@ if ( !class_exists( 'Inbound_Attachments_Lead_Profile' )) {
 														
 						}
 					} else {
-						echo '<div>No attachment found.</div>';
+						echo '<div class="attachments-message" style="margin-left:50px;">'. __('No attachments found.' , 'inbound-pro' ) .'</div>';
 					}
 					?>
 					</div>
