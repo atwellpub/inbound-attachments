@@ -37,10 +37,10 @@ if ( !class_exists( 'Inbound_Attachments_Settings' )) {
 		/**
 		*  Add to core settings
 		*/
-		function inbound_attachment_add_global_settings($global_settings) {
+		public static function inbound_attachment_add_global_settings($global_settings) {
 			/* ignore these hooks if inbound pro is active */
 			if (defined('INBOUND_PRO_CURRENT_VERSION')) {
-				//return $global_settings;
+				return $global_settings;
 			}
 			
 			switch (current_filter() ) 	{
