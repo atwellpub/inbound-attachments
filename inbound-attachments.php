@@ -3,7 +3,7 @@
 Plugin Name: Inbound Extension - Attachments
 Plugin URI: http://www.inboundnow.com/
 Description: Extends Inbound Forms with an attachments field type.
-Version: 1.0.1
+Version: 1.0.2
 Author: Inbound Now
 Contributors: Ajay Shukla, Hudson Atwell
 Author URI: http://www.inboundnow.com/
@@ -46,7 +46,7 @@ if ( !class_exists( 'Inbound_Attachments' )) {
 		*	Defines constants
 		*/
 		public static function define_constants() {
-			define('INBOUND_ATTACHMENTS_CURRENT_VERSION', '0.0.1' ); 
+			define('INBOUND_ATTACHMENTS_CURRENT_VERSION', '1.0.2' ); 
 			define('INBOUND_ATTACHMENTS_LABEL' , 'Inbound Attachments' ); 
 			define('INBOUND_ATTACHMENTS_SLUG' , plugin_basename( dirname(__FILE__) ) ); 
 			define('INBOUND_ATTACHMENTS_FILE' ,	__FILE__ ); 

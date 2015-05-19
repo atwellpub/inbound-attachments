@@ -109,10 +109,10 @@ if ( !class_exists( 'Inbound_Attachments_Processing' )) {
 				}
 			
 				if(file_exists($lead_dir.$name)){
-					$files[] = $name;
+					$files[] = $lead_dir.$name;
 				}
 			}
-			
+			//print_r($files);exit;
 			return $attachments = $files;
 			
 		}
