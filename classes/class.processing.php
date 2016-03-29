@@ -36,55 +36,57 @@ if ( !class_exists( 'Inbound_Attachments_Processing' )) {
 			$raw_params = ( isset( $_POST['raw_params'] ) ) ? $_POST['raw_params']  : false;
 			parse_str($raw_params);
 			
-			if( $inbound_attachment_files != '' && $inbound_attachment_files != null ){
-			
-				$upload_dir = self::get_attachments_directory();
-				$lead_dir = self::get_attachments_directory( $lead['id'] );
-				
-				$uploaded_files = explode('|', $inbound_attachment_files);
-				$moved_files =  array();
-				
-				foreach($uploaded_files as $name){
-					
-					if (!$name){
-						continue;
-					}
-					
-					/* create lead folder if does not exist */
-					if ( !file_exists( $lead_dir ) ) {
-						mkdir( $lead_dir , 0755, true);						
-						$file = fopen( $lead_dir . 'index.php',"w");
-						
-						mkdir( $lead_dir . 'thumbnail' , 0755, true);
-						$file = fopen( $lead_dir . 'thumbnail/index.php',"w");
-						
-						fclose($file);
-					}
-					
-					/* move file to lead folder */			
-					copy( $upload_dir.$name , $lead_dir.$name);
-					
-					/* delete original upload */
-					unlink(  $upload_dir.$name );
-					
-					/* if thumbnail exists move that too */
-					if ( file_exists( $upload_dir.'thumbnail/'.$name ) ) {
-						/* move thumbnail to lead directory */
-						copy( $upload_dir.'thumbnail/'.$name , $lead_dir.'thumbnail/'.$name);
-						/* delete original thumbnail */
-						unlink( $upload_dir.'thumbnail/'.$name );
-					}
-
-					
-					
-					/* prepare array for leads record */
-					if(file_exists($lead_dir.$name)){
-						$moved_files[] = $name;
-					}
-					
-				}
-				
+			if (!isset($inbound_attachment_files) || !$inbound_attachment_files) {
+				return;
 			}
+			
+			$upload_dir = self::get_attachments_directory();
+			$lead_dir = self::get_attachments_directory( $lead['id'] );
+
+			$uploaded_files = explode('|', $inbound_attachment_files);
+			$moved_files =  array();
+
+			foreach($uploaded_files as $name){
+
+				if (!$name){
+					continue;
+				}
+
+				/* create lead folder if does not exist */
+				if ( !file_exists( $lead_dir ) ) {
+					mkdir( $lead_dir , 0755, true);
+					$file = fopen( $lead_dir . 'index.php',"w");
+
+					mkdir( $lead_dir . 'thumbnail' , 0755, true);
+					$file = fopen( $lead_dir . 'thumbnail/index.php',"w");
+
+					fclose($file);
+				}
+
+				/* move file to lead folder */
+				copy( $upload_dir.$name , $lead_dir.$name);
+
+				/* delete original upload */
+				unlink(  $upload_dir.$name );
+
+				/* if thumbnail exists move that too */
+				if ( file_exists( $upload_dir.'thumbnail/'.$name ) ) {
+					/* move thumbnail to lead directory */
+					copy( $upload_dir.'thumbnail/'.$name , $lead_dir.'thumbnail/'.$name);
+					/* delete original thumbnail */
+					unlink( $upload_dir.'thumbnail/'.$name );
+				}
+
+
+
+				/* prepare array for leads record */
+				if(file_exists($lead_dir.$name)){
+					$moved_files[] = $name;
+				}
+
+			}
+				
+
 		}
 		
 		/**

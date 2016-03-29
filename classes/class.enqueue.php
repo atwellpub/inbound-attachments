@@ -37,7 +37,7 @@ if ( !class_exists( 'Inbound_Attachments_Enqueue' )) {
 				return;
 			}
 			
-			$inbound_attachment_file_upload = 'var inbound_attachment_file_upload = "'. admin_url( 'admin-ajax.php' ).'/?action=inbound_attachment_file_upload";';
+			$inbound_attachment_file_upload = 'var inbound_attachment_file_upload = "'. admin_url( 'admin-ajax.php' ).'?action=inbound_attachment_file_upload";';
 			$ajax_url = 'var ajaxurl = "'. admin_url( 'admin-ajax.php' ).'";';
 			echo "<script type='text/javascript'>\n";
 			echo "/* <![CDATA[ */\n";
