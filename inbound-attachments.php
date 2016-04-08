@@ -3,7 +3,7 @@
 Plugin Name: Inbound Extension - Attachments
 Plugin URI: http://www.inboundnow.com/
 Description: Extends Inbound Forms with an attachments field type.
-Version: 1.0.4
+Version: 1.0.5
 Author: Inbound Now
 Contributors: Ajay Shukla, Hudson Atwell
 Author URI: http://www.inboundnow.com/
@@ -46,14 +46,14 @@ if ( !class_exists( 'Inbound_Attachments' )) {
 		*	Defines constants
 		*/
 		public static function define_constants() {
-			define('INBOUND_ATTACHMENTS_CURRENT_VERSION', '1.0.4' );
+			define('INBOUND_ATTACHMENTS_CURRENT_VERSION', '1.0.5' );
 			define('INBOUND_ATTACHMENTS_LABEL' , 'Inbound Attachments' ); 
 			define('INBOUND_ATTACHMENTS_SLUG' , plugin_basename( dirname(__FILE__) ) ); 
 			define('INBOUND_ATTACHMENTS_FILE' ,	__FILE__ ); 
 			define('INBOUND_ATTACHMENTS_REMOTE_ITEM_NAME' , 'inbound-attaxchments' ); 
 			define('INBOUND_ATTACHMENTS_PATH', realpath(dirname(__FILE__)) . '/');
 			$upload_dir = wp_upload_dir();
-			$url = ( !strstr( INBOUND_ATTACHMENTS_PATH , 'plugins' )) ? $upload_dir['basedir'] . '/inbound-pro/extensions/' .plugin_basename( basename(__DIR__) ) : WP_PLUGIN_URL.'/'.plugin_basename( dirname(__FILE__) ).'/' ;
+			$url = ( !strstr( INBOUND_ATTACHMENTS_PATH , 'plugins' )) ? $upload_dir['baseurl'] . '/inbound-pro/extensions/' .plugin_basename( basename(__DIR__) ).'/' : WP_PLUGIN_URL.'/'.plugin_basename( dirname(__FILE__) ).'/' ;
 			define('INBOUND_ATTACHMENTS_URLPATH', $url ); 
 		}
 		

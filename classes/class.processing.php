@@ -21,7 +21,7 @@ if ( !class_exists( 'Inbound_Attachments_Processing' )) {
 		public static function load_hooks() {
 			
 			/* Add Lead Reference To File Uploaded */
-			add_action( 'inbound_store_lead_post' , array( __CLASS__ , 'reference_leads_and_move_files' ) );
+			add_action( 'inbound_store_lead_post' , array( __CLASS__ , 'reference_leads_and_move_files' ) , 5 , 1);
 			
 			add_filter( 'inbound_lead_notification_attachments' , array( __CLASS__ , 'inbound_attachment_email_attachment_notification' ) );
 			
@@ -39,7 +39,11 @@ if ( !class_exists( 'Inbound_Attachments_Processing' )) {
 			if (!isset($inbound_attachment_files) || !$inbound_attachment_files) {
 				return;
 			}
-			
+
+			$wp_upload_dir = wp_upload_dir();
+			$upload_url = $wp_upload_dir['baseurl'].'/leads/attachments/'.$lead_id.'/';
+
+
 			$upload_dir = self::get_attachments_directory();
 			$lead_dir = self::get_attachments_directory( $lead['id'] );
 
@@ -81,12 +85,16 @@ if ( !class_exists( 'Inbound_Attachments_Processing' )) {
 
 				/* prepare array for leads record */
 				if(file_exists($lead_dir.$name)){
-					$moved_files[] = $name;
+					$moved_files[] = $upload_url.$name;
 				}
 
 			}
-				
 
+			/* update lead meta for record sake */
+			$records = get_post_meta( $lead['id'] , '_leads_attachments' , true);
+			$records = (is_array($records)) ? $records: array();
+			$records = array_merge( $records , $moved_files );
+			update_post_meta( $lead['id'] , '_leads_attachments' , $records );
 		}
 		
 		/**
@@ -103,8 +111,7 @@ if ( !class_exists( 'Inbound_Attachments_Processing' )) {
 			
 			$uploaded_files = explode('|', $_POST['inbound_attachment_files']);
 			$files =  array();
-			
-			
+
 			foreach($uploaded_files as $name){
 				if (!$name){
 					continue;
@@ -114,7 +121,7 @@ if ( !class_exists( 'Inbound_Attachments_Processing' )) {
 					$files[] = $lead_dir.$name;
 				}
 			}
-			//print_r($files);exit;
+
 			return $attachments = $files;
 			
 		}
