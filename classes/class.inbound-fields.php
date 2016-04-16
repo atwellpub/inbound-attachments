@@ -43,7 +43,7 @@ if ( !class_exists( 'Inbound_Attachments_Fields' )) {
 			
 			/* only render field if 'attachments' type is selected. */ 
 			if ( !$field || $field['type'] != 'attachments'){
-				return;
+				return $form;
 			}
 
 			/* Mark loaded */
