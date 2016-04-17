@@ -24,6 +24,10 @@ if ( !class_exists( 'Inbound_Attachments_Fields' )) {
 			
 			/* Add handler to process field type */
 			add_filter( 'inbound_form_custom_field' , array( __CLASS__ , 'inbound_form_custom_field' ), 10, 3 );
+
+			/* Add mappable lead field */
+			add_filter( 'wp_leads_add_lead_field' , array( __CLASS__ , 'add_field_map_field' ), 10, 1 );
+
 		}
 		
 		/**
@@ -79,8 +83,8 @@ if ( !class_exists( 'Inbound_Attachments_Fields' )) {
 								<span class="btn btn-success fileinput-button">
 									<i class="glyphicon glyphicon-plus"></i>
 									<span>'. __( 'Add files...' , 'inbound-pro' ) .'</span>
-									<input type="'.$input_type .'" class="inbound-input '.$formatted_label . ' ' .$field_input_class.'" name="'.$field_name.'[]" id="'.$field_name.'" value="'.$fill_value.'" '.$et_output.' '.$req.' multiple/>
-									<input type="hidden" name="inbound_attachment_files"  id="inbound_attachment_files" value="" />
+									<input type="'.$input_type .'" class="inbound-input '.$formatted_label . ' ' .$field_input_class.'" name="'.$field_name.'[]" id="'.$field_name.'" value="'.$fill_value.'" '.$et_output.' multiple/>
+									<input type="hidden" name="inbound_attachment_files"  id="inbound_attachment_files" value=""  '.$req.'/>
 								</span>
 								<!--
 								<button type="submit" class="btn btn-primary start">
@@ -216,6 +220,18 @@ if ( !class_exists( 'Inbound_Attachments_Fields' )) {
 			
 			
 			return $form;
+		}
+
+		public static function add_field_map_field( $fields )  {
+			$fields[] = array(
+				'label' => __( 'Attachments', 'inbound-pro' ) ,
+				'key'  => 'wpleads_attachments',
+				'priority' => 370,
+				'type'  => 'textarea',
+				'nature' => 'core'
+			);
+
+			return $fields;
 		}
 	}
 	

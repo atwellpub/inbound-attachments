@@ -32,7 +32,7 @@ if ( !class_exists( 'Inbound_Attachments_Processing' )) {
 		*  Builds an attachment reference and moves files into lead id folder
 		*/
 		public static function reference_leads_and_move_files( $lead ){
-			
+;
 			$raw_params = ( isset( $_POST['raw_params'] ) ) ? $_POST['raw_params']  : false;
 			parse_str($raw_params);
 			
@@ -41,7 +41,7 @@ if ( !class_exists( 'Inbound_Attachments_Processing' )) {
 			}
 
 			$wp_upload_dir = wp_upload_dir();
-			$upload_url = $wp_upload_dir['baseurl'].'/leads/attachments/'.$lead_id.'/';
+			$upload_url = $wp_upload_dir['baseurl'].'/leads/attachments/'.$lead['id'].'/';
 
 
 			$upload_dir = self::get_attachments_directory();
@@ -91,10 +91,14 @@ if ( !class_exists( 'Inbound_Attachments_Processing' )) {
 			}
 
 			/* update lead meta for record sake */
-			$records = get_post_meta( $lead['id'] , '_leads_attachments' , true);
-			$records = (is_array($records)) ? $records: array();
+			$records = get_post_meta( $lead['id'] , 'wpleads_attachments' , true);
+			$records = json_decode($records,true);
+			$records = (!is_array($records)) ? array() : $records;
+			error_log(print_r($moved_files,true));
+
 			$records = array_merge( $records , $moved_files );
-			update_post_meta( $lead['id'] , '_leads_attachments' , $records );
+			error_log(print_r($records,true));
+			update_post_meta( $lead['id'] , 'wpleads_attachments' , json_encode($records) );
 		}
 		
 		/**
