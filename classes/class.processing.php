@@ -94,10 +94,10 @@ if ( !class_exists( 'Inbound_Attachments_Processing' )) {
 			$records = get_post_meta( $lead['id'] , 'wpleads_attachments' , true);
 			$records = json_decode($records,true);
 			$records = (!is_array($records)) ? array() : $records;
-			error_log(print_r($moved_files,true));
+			//error_log(print_r($moved_files,true));
 
 			$records = array_merge( $records , $moved_files );
-			error_log(print_r($records,true));
+			//error_log(print_r($records,true));
 			update_post_meta( $lead['id'] , 'wpleads_attachments' , json_encode($records) );
 		}
 		
